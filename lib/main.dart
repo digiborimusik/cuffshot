@@ -1,4 +1,5 @@
 import 'package:cuffshot/auth/FirebaseAuthService.dart';
+import 'package:cuffshot/auth/FirebaseStatusData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -56,18 +57,24 @@ class _TestState extends State<Test> {
     super.initState();
   }
 
+  void test() async {
+    // FirebaseStatusData usr = await authSrv.regIn('vanta@qwseesaa.ru', '123123');
+
+    // FirebaseStatusData usr =
+    //     await authSrv.signIn('vanta@qwseesaa.ru', '123123');
+
+    // FirebaseStatusData usr = await authSrv.updateUserData('bich', 'asdsad');
+
+    // FirebaseStatusData usr = await authSrv.signOut();
+    print('separ');
+    // print(usr.user);
+
+    // print(authSrv.auth.currentUser);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // authSrv.regIn('vanta@qwseesaa.ru', '123123');
-
-    // authSrv
-    //     .signIn('vanta@qwseesaa.ru', '123123')
-    //     .then((value) => print(value.isLogined));
-
-    // authSrv.signOut();
-    print('separ');
-
-    print(authSrv.auth.currentUser);
+    test();
     return Column(
       children: [
         FlatButton(
@@ -79,3 +86,13 @@ class _TestState extends State<Test> {
     );
   }
 }
+
+// class Testt {
+//   bool val;
+//   Testt({this.val = false});
+// }
+
+// class Testt2 extends Testt {
+//   bool val2;
+//   Testt2(this.val2, {bool df}) : super(val: df);
+// }

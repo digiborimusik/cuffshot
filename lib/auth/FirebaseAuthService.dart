@@ -47,9 +47,15 @@ class FirebaseAuthService {
     return FirebaseStatusData(false, auth.currentUser, null);
   }
 
-  Future updateUserData(String displayName, String photoUrl) {
-    auth.currentUser
-        .updateProfile(displayName: displayName, photoURL: photoUrl);
-    try {} catch (e) {}
+  Future<FirebaseStatusData> updateUserData(
+      String displayName, String photoUrl) async {
+    try {
+      await auth.currentUser
+          .updateProfile(displayName: displayName, photoURL: photoUrl);
+      return FirebaseStatusData(true, auth.currentUser, null);
+    } catch (e) {
+      print('Error in update data');
+      return FirebaseStatusData(true, auth.currentUser, 'error');
+    }
   }
 }
