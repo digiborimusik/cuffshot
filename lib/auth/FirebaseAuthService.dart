@@ -14,6 +14,8 @@ class FirebaseAuthService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return FirebaseStatusData(false, auth.currentUser, e.code);
+      } else if (e.code == 'invalid-email') {
+        return FirebaseStatusData(false, auth.currentUser, e.code);
       } else if (e.code == 'wrong-password') {
         return FirebaseStatusData(false, auth.currentUser, e.code);
       } else {
