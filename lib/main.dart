@@ -1,6 +1,6 @@
-import 'package:cuffshot/auth/FirebaseAuthService.dart';
-import 'package:cuffshot/auth/FirebaseStatusData.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cuffshot/auth/AuthActions.dart';
+import 'package:cuffshot/auth/AuthBloc.dart';
+import 'package:cuffshot/auth/AuthStates.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -50,24 +50,28 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
-  FirebaseAuthService authSrv = FirebaseAuthService();
+  AuthBloc bloc = AuthBloc();
 
   @override
   void initState() {
     super.initState();
+    bloc.stateStream.listen((event) {
+      print(event);
+      if (event is IsLogined) {
+        print(event.user);
+      }
+      print('busy: ' + event.busy.toString());
+    });
   }
 
   void test() async {
-    // FirebaseStatusData usr = await authSrv.regIn('vanta@qwseesaa.ru', '123123');
-
-    // FirebaseStatusData usr =
-    //     await authSrv.signIn('vanta@qwseesaa.ru', '123123');
-
-    // FirebaseStatusData usr = await authSrv.updateUserData('bich', 'asdsad');
-
-    // FirebaseStatusData usr = await authSrv.signOut();
     print('separ');
-    // print(usr.user);
+
+    // bloc.mapEvent(SignIn('vanta@qwseesaa.ru', '123123'));
+    // bloc.mapEvent(Register('vamn@dsa.su', '123123'));
+    // bloc.mapEvent(UpdateData('Turbo', null));
+    // bloc.mapEvent(SignOut());
+    // print(bloc.state);
 
     // print(authSrv.auth.currentUser);
   }
@@ -86,13 +90,3 @@ class _TestState extends State<Test> {
     );
   }
 }
-
-// class Testt {
-//   bool val;
-//   Testt({this.val = false});
-// }
-
-// class Testt2 extends Testt {
-//   bool val2;
-//   Testt2(this.val2, {bool df}) : super(val: df);
-// }

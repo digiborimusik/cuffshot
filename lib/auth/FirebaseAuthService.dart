@@ -42,6 +42,16 @@ class FirebaseAuthService {
     }
   }
 
+  Future<FirebaseStatusData> checkSingStatus() async {
+    User user = auth.currentUser;
+
+    if (user != null) {
+      return FirebaseStatusData(true, auth.currentUser, null);
+    } else {
+      return FirebaseStatusData(false, auth.currentUser, null);
+    }
+  }
+
   Future signOut() async {
     await auth.signOut();
     return FirebaseStatusData(false, auth.currentUser, null);
