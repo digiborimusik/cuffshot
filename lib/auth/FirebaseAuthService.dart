@@ -8,39 +8,64 @@ class FirebaseAuthService {
 
   // Sign in by email and password
   Future<FirebaseStatusData> signIn(String email, String pass) async {
+    // Check data for empty
+    if (email == null || pass == null || email == '' || pass == '') {
+      return FirebaseStatusData(
+          false, auth.currentUser, 'Empty email or password');
+    }
+
     try {
       await auth.signInWithEmailAndPassword(email: email, password: pass);
       return FirebaseStatusData(true, auth.currentUser, null);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        return FirebaseStatusData(false, auth.currentUser, e.code);
+        return FirebaseStatusData(false, auth.currentUser, 'User not found');
       } else if (e.code == 'invalid-email') {
-        return FirebaseStatusData(false, auth.currentUser, e.code);
+        return FirebaseStatusData(false, auth.currentUser, 'Invalid email');
+      } else if (e.code == 'too-many-requests') {
+        return FirebaseStatusData(
+            false, auth.currentUser, 'To many request, chill some');
       } else if (e.code == 'wrong-password') {
-        return FirebaseStatusData(false, auth.currentUser, e.code);
+        return FirebaseStatusData(false, auth.currentUser, 'Wrong password');
       } else {
         print('Another error in sign in: ' + e.code.toString());
-        return FirebaseStatusData(false, auth.currentUser, 'unhandled-error');
+        return FirebaseStatusData(false, auth.currentUser, 'Empty exception');
       }
+    } catch (e) {
+      print('Another error in sign in: ' + e.code.toString());
+      return FirebaseStatusData(false, auth.currentUser, 'Unhandled error');
     }
   }
 
   // Register by email and password
   Future<FirebaseStatusData> regIn(String email, String pass) async {
+    // Check data for empty
+    if (email == null || pass == null || email == '' || pass == '') {
+      return FirebaseStatusData(
+          false, auth.currentUser, 'Empty email or password');
+    }
+
     try {
       await auth.createUserWithEmailAndPassword(email: email, password: pass);
       return FirebaseStatusData(true, auth.currentUser, null);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        return FirebaseStatusData(false, auth.currentUser, e.code);
+        return FirebaseStatusData(
+            false, auth.currentUser, 'Email already in use');
       } else if (e.code == 'invalid-email') {
-        return FirebaseStatusData(false, auth.currentUser, e.code);
+        return FirebaseStatusData(false, auth.currentUser, 'Invalid email');
+      } else if (e.code == 'too-many-requests') {
+        return FirebaseStatusData(
+            false, auth.currentUser, 'To many requests, chill some');
       } else if (e.code == 'weak-password') {
-        return FirebaseStatusData(false, auth.currentUser, e.code);
+        return FirebaseStatusData(false, auth.currentUser, 'Week password');
       } else {
         print('Another error in reg in: ' + e.code.toString());
-        return FirebaseStatusData(false, auth.currentUser, 'unhandled-error');
+        return FirebaseStatusData(false, auth.currentUser, 'Empty exception');
       }
+    } catch (e) {
+      print('Another error in sign in: ' + e.code.toString());
+      return FirebaseStatusData(false, auth.currentUser, 'Unhandled error');
     }
   }
 

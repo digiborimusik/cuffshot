@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cuffshot/auth/AuthActions.dart';
 import 'package:cuffshot/auth/AuthBloc.dart';
 import 'package:cuffshot/auth/AuthStates.dart';
@@ -53,7 +55,7 @@ class _AuthScreenState extends State<AuthScreen> {
           }
           if (snapshot.data is IsLogined) {
             SchedulerBinding.instance.addPostFrameCallback((e) {
-              Navigator.pushReplacementNamed(context, 'test');
+              Navigator.pushReplacementNamed(context, 'events');
             });
             return Center(child: Text('Camin baby!'));
           }
@@ -84,9 +86,39 @@ class _SignFieldState extends State<SignField> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     authbloc = context.read<AuthBloc>();
+  }
+
+  Widget tooltip(BuildContext context) {
+    if (widget.errCode == null) {
+      return Container();
+    } else {
+      return AnimatedContainer(
+        decoration: BoxDecoration(
+            color: Colors.red.withOpacity(widget.isPending ? 0.0 : 1),
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        padding: EdgeInsets.all(widget.isPending ? 4 : 6),
+        margin: EdgeInsets.all(8),
+        duration: Duration(milliseconds: 100),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.info_outline,
+              color: Colors.white,
+            ),
+            Container(
+              width: 6,
+            ),
+            Text(
+              widget.errCode,
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -129,7 +161,6 @@ class _SignFieldState extends State<SignField> {
             child: TextField(
               enabled: !widget.isPending,
               decoration: InputDecoration(
-                helperText: widget.isErrored ? widget.errCode : null,
                 icon: Icon(Icons.lock_open),
                 // enabledBorder: UnderlineInputBorder(
                 //   borderSide: BorderSide(color: Colors.amber),
@@ -145,15 +176,16 @@ class _SignFieldState extends State<SignField> {
               onChanged: (value) => password = value,
             ),
           ),
+          tooltip(context),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FlatButton(
                   onPressed: () => authbloc.mapEvent(SignIn(email, password)),
-                  child: Text('Sign in')),
+                  child: Text('Login')),
               FlatButton(
                   onPressed: () => authbloc.mapEvent(Register(email, password)),
-                  child: Text('Sign up'))
+                  child: Text('Register'))
             ],
           )
         ],

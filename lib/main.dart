@@ -1,3 +1,4 @@
+import 'package:cuffshot/events/EventsScreen.dart';
 import 'package:cuffshot/TestScreen.dart';
 import 'package:cuffshot/auth/AuthActions.dart';
 import 'package:cuffshot/auth/AuthBloc.dart';
@@ -31,4 +32,5 @@ class MyApp extends StatelessWidget {
 Map<String, Widget Function(BuildContext)> routes = {
   '/': (_) => AuthScreen(),
   'test': (_) => TestW(),
+  'events': (_) => EventsScreen()
 };
