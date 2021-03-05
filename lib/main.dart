@@ -1,9 +1,9 @@
-import 'package:cuffshot/events/EventsScreen.dart';
 import 'package:cuffshot/TestScreen.dart';
-import 'package:cuffshot/auth/AuthActions.dart';
+
 import 'package:cuffshot/auth/AuthBloc.dart';
 import 'package:cuffshot/auth/AuthScreen.dart';
-import 'package:cuffshot/auth/AuthStates.dart';
+
+import 'package:cuffshot/events_screen/events_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

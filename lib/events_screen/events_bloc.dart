@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 // import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cuffshot/events/EvActions.dart';
-import 'package:cuffshot/events/Event.dart';
+import 'package:cuffshot/events_screen/actions.dart';
+import 'package:cuffshot/modules/event.dart';
+
 import 'package:rxdart/rxdart.dart';
 
 class EventsBloc {
@@ -23,9 +23,10 @@ class EventsBloc {
     // Opening stream
     collectionStream = firestore.collection('events').snapshots();
     // Subscribing for data
-    streamSub = collectionStream.listen((event) {
-      List events = event.docs.map((e) => Event.fromRef(e)).toList();
+    streamSub = collectionStream.listen((data) {
+      List events = data.docs.map((e) => Event.fromRef(e)).toList();
       _eventsChanell.sink.add(events);
+      print(events);
     });
   }
 
